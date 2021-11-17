@@ -24,24 +24,6 @@ namespace nbg.monetarypolicy.sdk
             return sendRequest(webRequest);
         }
 
-        private static Currencies sendRequest(WebRequest webRequest)
-        {
-            HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
-
-            if (response.StatusDescription == "OK")
-            {
-                Stream dataStream = response.GetResponseStream();
-
-                StreamReader reader = new StreamReader(dataStream);
-
-                string responseFromServer = reader.ReadToEnd();
-
-                return JsonConvert.DeserializeObject<Currencies[]>(responseFromServer).FirstOrDefault();
-            }
-
-            throw new Exception(response.StatusDescription);
-        }
-
         public Currencies GetCurrencies(CurrencyEnum currencyEnum)
         {
             WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?currencies={currencyEnum}");
@@ -58,6 +40,23 @@ namespace nbg.monetarypolicy.sdk
         {
             WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?currencies={currencyEnum}&date={dateTime.ToString("yyyy-MM-dd")}");
             return sendRequest(webRequest);
+        }
+        private static Currencies sendRequest(WebRequest webRequest)
+        {
+            HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
+
+            if (response.StatusDescription == "OK")
+            {
+                Stream dataStream = response.GetResponseStream();
+
+                StreamReader reader = new StreamReader(dataStream);
+
+                string responseFromServer = reader.ReadToEnd();
+
+                return JsonConvert.DeserializeObject<Currencies[]>(responseFromServer).FirstOrDefault();
+            }
+
+            throw new Exception(response.StatusDescription);
         }
     }
 }
