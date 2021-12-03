@@ -32,13 +32,13 @@ namespace nbg.monetarypolicy.sdk
 
         public Currencies GetCurrencies(DateTime dateTime)
         {
-            WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?&date={dateTime}");
+            WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?&date={formatDate(dateTime)}");
             return sendRequest(webRequest);
         }
 
         public Currencies GetCurrencies(DateTime dateTime, CurrencyEnum currencyEnum)
         {
-            WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?currencies={currencyEnum}&date={dateTime.ToString("yyyy-MM-dd")}");
+            WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?currencies={currencyEnum}&date={formatDate(dateTime)}");
             return sendRequest(webRequest);
         }
         private static Currencies sendRequest(WebRequest webRequest)
@@ -57,6 +57,23 @@ namespace nbg.monetarypolicy.sdk
             }
 
             throw new Exception(response.StatusDescription);
+        }
+
+        public Currencies GetCurrencies(string currencyCode)
+        {
+            WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?currencies={currencyCode}");
+            return sendRequest(webRequest);
+        }
+
+        public Currencies GetCurrencies(DateTime dateTime, string currencyCode)
+        {
+            WebRequest webRequest = WebRequest.Create($"{_serviceUrl}/?currencies={currencyCode}&date={formatDate(dateTime)}");
+            return sendRequest(webRequest);
+        }
+
+        private string formatDate(DateTime dateTime)
+        {
+            return dateTime.AddDays(-1).ToString("yyyy-MM-dd");
         }
     }
 }

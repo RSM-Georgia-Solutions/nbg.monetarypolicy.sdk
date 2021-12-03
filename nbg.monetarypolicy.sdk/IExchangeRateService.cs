@@ -32,5 +32,20 @@ namespace nbg.monetarypolicy.sdk
         /// <param name="currencyEnum"></param>
         /// <returns></returns>
         public Currencies GetCurrencies(DateTime dateTime, CurrencyEnum currencyEnum);
+
+        /// <summary>
+        /// აბრუნებს ლარის მიმართ უცხოური ვალუტის გაცვლის ოფიციალურ კურსს
+        /// </summary>
+        /// <param name="currencyCode"></param>
+        /// <returns></returns>
+        public Currencies GetCurrencies(string currencyCode);
+
+        /// <summary>
+        /// აბრუნებს ლარის მიმართ უცხოური ვალუტების გაცვლის ოფიციალურ კურსებს, მითითებული თარიღისთვის და ვალუტისთვის
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="currencyCode"></param>
+        /// <returns></returns>
+        public Currencies GetCurrencies(DateTime dateTime, string currencyCode);
     }
 }
